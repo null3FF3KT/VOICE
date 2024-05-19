@@ -27,7 +27,6 @@ namespace VOICE
                     messages = new Message[] { new Message { role = "user", content = userInput } },
                     max_tokens = 1000
                 };
-								Console.WriteLine(JsonConvert.SerializeObject(requestBody));
                 var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
                 var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
                 response.EnsureSuccessStatusCode();
