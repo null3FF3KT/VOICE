@@ -1,4 +1,4 @@
 # VOICE: Voice-Operated Interactive Conversation Engine
 * Built rough POC with the assistance of ChatGPT and GitHub Copilot in less than a day.
 * Uses Microsoft Cognitive Services to perform speech to text and text to speech.
-* Uses ChatGPT 4o API to generate response.
+* Uses ChatGPT API to generate response frome the gpt-4o model.
