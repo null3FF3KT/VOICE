@@ -9,3 +9,19 @@
 * Add keys for Cognitive Services and OpenAI API
 * Modify appsettings.json with these values
 * Assure appsettings.json is listed in your .gitignore before checking in any code.
+
+* appsettings.json Example
+```
+{
+  "AzureSpeech": {
+    "Region": "<Your_Region>", // e.g. "eastus"
+    "Secret": "<Your_Secret_Name_In_KeyVault>"
+  },
+  "OpenAI":{
+    "ApiKey": "<Your_Secret_Name_In_KeyVault>"
+  },
+  "AzureKeyVault": {
+    "Url": "Your_KeyVault_URL", // e.g. "https://<Your_KeyVault_Name>.vault.azure.net/"
+  }
+}
+```
