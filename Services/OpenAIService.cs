@@ -13,7 +13,7 @@ namespace VOICE.Services
             _apiKey = apiKey;
         }
 
-        public async Task<string> GetChatGPTResponse(string userInput)
+        public async Task<string> GetChatGPTResponse(List<Message> messages)
         {
             using (var client = new HttpClient())
             {
@@ -21,7 +21,7 @@ namespace VOICE.Services
                 var requestBody = new
                 {
                     model = "gpt-4o",
-                    messages = new Message[] { new Message { role = "user", content = userInput } },
+                    messages,
                     max_tokens = 1000
                 };
                 var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");

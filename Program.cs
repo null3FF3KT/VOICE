@@ -1,4 +1,5 @@
-﻿using VOICE.Services;
+﻿using VOICE.Models;
+using VOICE.Services;
 
 
 namespace VOICE
@@ -11,13 +12,17 @@ namespace VOICE
       var speechService = new SpeechService(configService.SpeechKey, configService.Region);
       var openAiService = new OpenAIService(configService.OpenAiApiKey);
       bool continueRunning = true;
+      List<Message> messages = new List<Message>();
+
 
       while (continueRunning)
       {
         var recognizedText = await speechService.RecognizeSpeechAsync();
+        messages.Add(new Message { content = recognizedText, role = nameof(Roles.user) });
         if (!string.IsNullOrEmpty(recognizedText))
         {
-          var chatResponse = await openAiService.GetChatGPTResponse(recognizedText);
+          var chatResponse = await openAiService.GetChatGPTResponse(messages);
+          messages.Add(new Message { content = chatResponse, role = nameof(Roles.assistant) });
           await speechService.SynthesizeSpeechAsync(chatResponse);
         }
         Console.WriteLine("Do you want to go again? (yes to continue, any other key to quit):");
