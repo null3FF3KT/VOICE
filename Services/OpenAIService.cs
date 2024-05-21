@@ -1,11 +1,8 @@
-using System;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VOICE.Models;
 
-namespace VOICE
+namespace VOICE.Services
 {
     public class OpenAIService
     {
@@ -33,7 +30,7 @@ namespace VOICE
 
                 var responseString = await response.Content.ReadAsStringAsync();
                 dynamic responseJson = JsonConvert.DeserializeObject(responseString);
-								string answer = responseJson.choices[0].message.content;
+                string answer = responseJson.choices[0].message.content;
                 return answer;
             }
         }
