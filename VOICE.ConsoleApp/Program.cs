@@ -39,9 +39,9 @@ namespace VOICE.ConsoleApp
                     await speechTask;
                 }
 
-                Console.WriteLine("Do you want to go again? (yes to continue, any other key to quit):");
+                Console.WriteLine("To quit type 'exit' and press return (To continue, just press return): ");
                 var userInput = Console.ReadLine();
-                if (!userInput.Equals("yes", StringComparison.OrdinalIgnoreCase))
+                if (userInput.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
                     continueRunning = false;
                 }
