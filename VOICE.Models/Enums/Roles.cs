@@ -1,5 +1,6 @@
 public enum Roles
 {
 		user,
-		assistant
+		assistant,
+		system
 }

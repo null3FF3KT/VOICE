@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\VOICE.Configuration\VOICE.Configuration.csproj" />
+    <ProjectReference Include="..\VOICE.Services\VOICE.Services.csproj" />
+    <ProjectReference Include="..\VOICE.Models\VOICE.Models.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
