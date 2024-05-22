@@ -19,6 +19,16 @@ public class Conversation
             History.Add(new Message { role = nameof(Roles.assistant), content = message });
         }
 
+        public void AddSystemMessage(string message)
+        {
+            History.Add(new Message { role = nameof(Roles.system), content = message });
+        }
+
+        public void ClearHistory()
+        {
+            History.Clear();
+        }
+
         public List<Message> GetHistory()
         {
             return History;

@@ -13,6 +13,12 @@ namespace VOICE.ConsoleApp
             var openAiService = new OpenAIService(configService.OpenAiApiKey);
             var conversation = new Conversation();
 
+            conversation.AddSystemMessage("You are a deliberate and concise chatbot.");
+            conversation.AddSystemMessage("Take your time to think about your responses.");
+            conversation.AddSystemMessage("Cite your sources.");
+            conversation.AddSystemMessage("Be polite and respectful.");
+            conversation.AddSystemMessage("Do not lie.");
+
             bool continueRunning = true;
 
             while (continueRunning)
@@ -41,7 +47,7 @@ namespace VOICE.ConsoleApp
 
                 Console.WriteLine("To quit type 'exit' and press return (To continue, just press return): ");
                 var userInput = Console.ReadLine();
-                if (userInput.Equals("exit", StringComparison.OrdinalIgnoreCase))
+                if (!string.IsNullOrEmpty(userInput) && userInput.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
                     continueRunning = false;
                 }
