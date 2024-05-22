@@ -1,10 +1,3 @@
-VOICE.Configuration\bin
-VOICE.Configuration\obj
-VOICE.ConsoleApp\bin
-VOICE.ConsoleApp\obj
-VOICE.Models\bin
-VOICE.Models\obj
-VOICE.Services\bin
-/bin
-/obj
+**/bin/
+**/obj/
 appsettings.json
