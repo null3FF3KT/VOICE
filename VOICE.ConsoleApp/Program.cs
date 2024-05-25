@@ -1,6 +1,11 @@
 ﻿using VOICE.Configuration;
 using VOICE.Services;
-using VOICE.Models;
+using VOICE.Data.Context;
+using VOICE.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using VOICE.Data.Models;
 
 namespace VOICE.ConsoleApp
 {
@@ -12,6 +17,14 @@ namespace VOICE.ConsoleApp
             var speechService = new CognitiveServicesSpeech(configService.SpeechKey, configService.Region);
             var openAiService = new OpenAIService(configService.OpenAiApiKey);
             var conversation = new Conversation();
+            var host = CreateHostBuilder(args).Build();
+            ApplyMigrations(host);
+
+            var hostTask = host.RunAsync();
+
+            var scope = host.Services.CreateScope();
+            var conversationRepository = scope.ServiceProvider.GetRequiredService<ConversationRepository>();
+
 
             conversation.AddSystemMessage("You are a deliberate and concise chatbot.");
             conversation.AddSystemMessage("Take your time to think about your responses.");
@@ -53,7 +66,37 @@ namespace VOICE.ConsoleApp
                 }
             }
 
+            // need to map the conversation object to the Conversation model.  History = Messages
+            var dataConversation = new VOICE.Data.Models.Conversation();
+            
+            foreach (var message in conversation.GetHistory())
+            {
+                dataConversation.Messages.Add(new VOICE.Data.Models.Message
+                {
+                    role = message.role,
+                    content = message.content
+                });
+            }   
+            await conversationRepository.AddConversationAsync(dataConversation);
             Console.WriteLine("Goodbye!");
+            await host.StopAsync();
+            await hostTask;
+        }
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddDbContext<DataContext>(options =>
+                    options.UseMySql("redacted", 
+                    new MySqlServerVersion(new Version(8, 0, 0))));
+                services.AddScoped<ConversationRepository>();
+            });
+
+        private static void ApplyMigrations(IHost host)
+        {
+            using var scope = host.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+            db.Database.Migrate();
         }
     }
 }

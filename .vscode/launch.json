@@ -1,0 +1,26 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+			{
+					"name": ".NET Core Launch (Console)",
+					"type": "coreclr",
+					"request": "launch",
+					"preLaunchTask": "build",
+					"program": "${workspaceFolder}/VOICE.ConsoleApp/bin/Debug/net7.0/VOICE.ConsoleApp.dll",
+					"args": [],
+					"cwd": "${workspaceFolder}/VOICE.ConsoleApp",
+					"stopAtEntry": false,
+					"console": "internalConsole",
+					"logging": {
+							"engineLogging": false
+					},
+					"internalConsoleOptions": "openOnSessionStart",
+					"env": {
+							"ASPNETCORE_ENVIRONMENT": "Development"
+					},
+					"sourceFileMap": {
+							"/Views": "${workspaceFolder}/Views"
+					}
+			}
+	]
+}
