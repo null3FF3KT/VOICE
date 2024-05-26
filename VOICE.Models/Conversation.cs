@@ -24,6 +24,14 @@ public class Conversation
             History.Add(new Message { role = nameof(Roles.system), content = message });
         }
 
+        public void RemoveLastMessage()
+        {
+            if (History.Count > 0)
+            {
+                History.RemoveAt(History.Count - 1);
+            }
+        }
+
         public void ClearHistory()
         {
             History.Clear();
