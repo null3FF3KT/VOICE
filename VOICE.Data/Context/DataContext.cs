@@ -10,14 +10,6 @@ namespace VOICE.Data.Context
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=localhost:1433;Database=VoiceDb;User Id=sa;Password=mark99Paris!;Trusted_Connection=False;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Conversation>(entity =>
