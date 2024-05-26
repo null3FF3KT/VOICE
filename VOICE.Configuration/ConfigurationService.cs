@@ -9,11 +9,12 @@ public class ConfigurationService
 	public string SpeechKey { get; }
 	public string Region { get; }
 	public string OpenAiApiKey { get; }
+	public string DatabaseConnectionString { get; }
 
 	public ConfigurationService()
 	{
 		var builder = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
+				.SetBasePath(AppContext.BaseDirectory)
 				.AddJsonFile("appsettings.json");
 		Configuration = builder.Build();
 
@@ -28,5 +29,6 @@ public class ConfigurationService
 		SpeechKey = client.GetSecret(Configuration["AzureSpeech:Secret"]).Value.Value;
 		Region = Configuration["AzureSpeech:Region"]?? "eastus";
 		OpenAiApiKey = client.GetSecret(Configuration["OpenAI:ApiKey"]).Value.Value;
+		DatabaseConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
 	}
 }

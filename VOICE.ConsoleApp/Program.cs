@@ -5,7 +5,6 @@ using VOICE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using VOICE.Data.Models;
 
 namespace VOICE.ConsoleApp
 {
@@ -16,8 +15,9 @@ namespace VOICE.ConsoleApp
             var configService = new ConfigurationService();
             var speechService = new CognitiveServicesSpeech(configService.SpeechKey, configService.Region);
             var openAiService = new OpenAIService(configService.OpenAiApiKey);
-            
-            var host = CreateHostBuilder(args).Build();
+            var connectionString = configService.DatabaseConnectionString;
+
+            var host = CreateHostBuilder(args, connectionString).Build();
             ApplyMigrations(host);
 
             var hostTask = host.RunAsync();
@@ -31,12 +31,12 @@ namespace VOICE.ConsoleApp
             await host.StopAsync();
             await hostTask;
         }
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args, string connectionString) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddDbContext<DataContext>(options =>
-                    options.UseMySql("Server=localhost;port=3306;Database=VoiceDb;User Id=root;Password=mark77Paris!;", 
+                    options.UseMySql(connectionString, 
                     new MySqlServerVersion(new Version(8, 0, 0))));
                 services.AddScoped<ConversationRepository>();
             });
