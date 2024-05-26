@@ -16,7 +16,7 @@ namespace VOICE.ConsoleApp
             var configService = new ConfigurationService();
             var speechService = new CognitiveServicesSpeech(configService.SpeechKey, configService.Region);
             var openAiService = new OpenAIService(configService.OpenAiApiKey);
-            var conversation = new Conversation();
+            
             var host = CreateHostBuilder(args).Build();
             ApplyMigrations(host);
 
@@ -25,66 +25,9 @@ namespace VOICE.ConsoleApp
             var scope = host.Services.CreateScope();
             var conversationRepository = scope.ServiceProvider.GetRequiredService<ConversationRepository>();
 
+            var speak = new Speak(new Conversation(), openAiService, conversationRepository, speechService);
+            await speak.RunAsync();
 
-            conversation.AddSystemMessage("You are a deliberate and concise chatbot.");
-            conversation.AddSystemMessage("Take your time to think about your responses.");
-            conversation.AddSystemMessage("Cite your sources.");
-            conversation.AddSystemMessage("Be polite and respectful.");
-            conversation.AddSystemMessage("Do not lie.");
-
-            bool continueRunning = true;
-
-            while (continueRunning)
-            {
-                var recognizedText = await speechService.RecognizeSpeechAsync();
-                if (!string.IsNullOrEmpty(recognizedText))
-                {
-                    conversation.AddUserMessage(recognizedText);
-
-                    var chatResponse = await openAiService.GetChatGPTResponse(conversation.GetHistory());
-                    conversation.AddBotMessage(chatResponse);
-                    var speechTask = speechService.SynthesizeSpeechAsync(chatResponse);
-
-                    Console.WriteLine("\nPress 'c' to cancel the speech.\n");
-                    while (!speechTask.IsCompleted)
-                    {
-                        if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.C)
-                        {
-                            speechService.CancelSpeech();
-                            break;
-                        }
-                    }
-
-                    await speechTask;
-                }
-
-                Console.WriteLine("To quit type 'exit' and press return (To continue, just press return): ");
-                var userInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(userInput) && userInput.Equals("exit", StringComparison.OrdinalIgnoreCase))
-                {
-                    continueRunning = false;
-                }
-            }
-
-            conversation.AddUserMessage("Describe our conversation in five words or less.");
-            var nameConversation = await openAiService.GetChatGPTResponse(conversation.GetHistory());
-            conversation.RemoveLastMessage();
-            
-            var dataConversation = new VOICE.Data.Models.Conversation
-            {
-                name = nameConversation,
-                created = DateTime.Now
-            };
-            foreach (var message in conversation.GetHistory())
-            {
-                dataConversation.Messages.Add(new VOICE.Data.Models.Message
-                {
-                    role = message.role,
-                    content = message.content
-                });
-            }   
-            await conversationRepository.AddConversationAsync(dataConversation);
-            Console.WriteLine("Goodbye!");
             await host.StopAsync();
             await hostTask;
         }
