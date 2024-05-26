@@ -66,9 +66,15 @@ namespace VOICE.ConsoleApp
                 }
             }
 
-            // need to map the conversation object to the Conversation model.  History = Messages
-            var dataConversation = new VOICE.Data.Models.Conversation();
+            conversation.AddUserMessage("Describe our conversation in five words or less.");
+            var nameConversation = await openAiService.GetChatGPTResponse(conversation.GetHistory());
+            conversation.RemoveLastMessage();
             
+            var dataConversation = new VOICE.Data.Models.Conversation
+            {
+                name = nameConversation,
+                created = DateTime.Now
+            };
             foreach (var message in conversation.GetHistory())
             {
                 dataConversation.Messages.Add(new VOICE.Data.Models.Message
