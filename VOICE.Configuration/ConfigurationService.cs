@@ -29,6 +29,6 @@ public class ConfigurationService
 		SpeechKey = client.GetSecret(Configuration["AzureSpeech:Secret"]).Value.Value;
 		Region = Configuration["AzureSpeech:Region"]?? "eastus";
 		OpenAiApiKey = client.GetSecret(Configuration["OpenAI:ApiKey"]).Value.Value;
-		DatabaseConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
+		DatabaseConnectionString = client.GetSecret(Configuration["ConnectionStrings:DefaultConnection"]).Value.Value;
 	}
 }
