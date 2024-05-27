@@ -4,7 +4,8 @@
 ## In order to use VOICE
 * You will need to set up Cognitive Services in Azure
 * Create a key vault in Azure
-* Add keys for Cognitive Services and OpenAI API
+* Setup MySql database
+* Add keys for Cognitive Services, OpenAI API, ConnectionStrings
 * Modify appsettings.json with these values
 * Assure appsettings.json is listed in your .gitignore before checking in any code.
 * Assure appsettings.json is listed in your .gitignore before checking in any code.
@@ -21,6 +22,9 @@
   },
   "AzureKeyVault": {
     "Url": "Your_KeyVault_URL", // e.g. "https://<Your_KeyVault_Name>.vault.azure.net/"
+  },
+  "ConnectionStrings" {
+    "DefaultConnection": "<Your_MySQL_ConnectionString>"
   }
 }
 ```
