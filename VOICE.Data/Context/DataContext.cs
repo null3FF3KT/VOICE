@@ -11,12 +11,12 @@ namespace VOICE.Data.Context
         public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Conversation>(entity =>
         {
-            entity.Property(e => e.name).HasColumnType("varchar(255)"); // Adjust the length as necessary
-            entity.Property(e => e.created).HasColumnType("datetime");
-        });
-    }
+            modelBuilder.Entity<Conversation>(entity =>
+            {
+                entity.Property(e => e.name).HasColumnType("varchar(255)"); // Adjust the length as necessary
+                entity.Property(e => e.created).HasColumnType("datetime");
+            });
+        }
     }
 }
