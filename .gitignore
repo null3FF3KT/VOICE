@@ -3,3 +3,7 @@
 appsettings*.json
 
 .vscode/
+
+**/host.json
+**/local.settings.json
+**/launchSettings.json

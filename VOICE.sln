@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOICE.Configuration", "VOIC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOICE.Services", "VOICE.Services\VOICE.Services.csproj", "{88A4E85F-A7A6-44B1-93C9-23E371534EBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOICE.AiFunctionApp", "VOICE.AiFunctionApp\VOICE.AiFunctionApp.csproj", "{EF665077-DA5D-4979-B3AF-F8992A500C6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{88A4E85F-A7A6-44B1-93C9-23E371534EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88A4E85F-A7A6-44B1-93C9-23E371534EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88A4E85F-A7A6-44B1-93C9-23E371534EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF665077-DA5D-4979-B3AF-F8992A500C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF665077-DA5D-4979-B3AF-F8992A500C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF665077-DA5D-4979-B3AF-F8992A500C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF665077-DA5D-4979-B3AF-F8992A500C6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
