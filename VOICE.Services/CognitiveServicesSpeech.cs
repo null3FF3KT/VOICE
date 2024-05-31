@@ -12,6 +12,11 @@ public class CognitiveServicesSpeech
 			_synthesizer = new SpeechSynthesizer(_speechConfig);
 		}
 
+		public SpeechConfig GetSpeechConfig()
+		{
+			return _speechConfig;
+		}
+
 		public async Task<string> RecognizeSpeechAsync()
 		{
 			using var recognizer = new SpeechRecognizer(_speechConfig);
