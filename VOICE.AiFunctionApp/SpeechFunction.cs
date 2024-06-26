@@ -109,7 +109,7 @@ namespace VOICE.AiFunctionApp
                 {
                     FileName = ffmpegPath,
                     // Add -v verbose for more detailed FFmpeg output
-                    Arguments = $"-v verbose -f webm -i \"{tempWebMPath}\" -acodec pcm_s16le -ar 44100 \"{tempWavPath}\"",
+                    Arguments = $"-v verbose -f webm -i \"{tempWebMPath}\" -acodec pcm_s16le -ar 16000 -ac 1 \"{tempWavPath}\"",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
