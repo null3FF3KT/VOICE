@@ -3,32 +3,46 @@ using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
 namespace VOICE.Configuration;
-public class ConfigurationService
+public static class ConfigurationService
 {
-	public IConfiguration Configuration { get; }
-	public string SpeechKey { get; }
-	public string Region { get; }
-	public string OpenAiApiKey { get; }
-	public string DatabaseConnectionString { get; }
+    private static IConfiguration Configuration => new ConfigurationBuilder()
+        .SetBasePath(AppContext.BaseDirectory)
+        .AddJsonFile("appsettings.json")
+		.AddJsonFile("local.settings.json")
+        .Build();
 
-	public ConfigurationService()
-	{
-		var builder = new ConfigurationBuilder()
-				.SetBasePath(AppContext.BaseDirectory)
-				.AddJsonFile("appsettings.json");
-		Configuration = builder.Build();
+    private static SecretClient GetSecretClient()
+    {
+        var keyVaultUrl = Configuration["AzureKeyVault:Url"];
+        if (string.IsNullOrEmpty(keyVaultUrl))
+        {
+            throw new Exception("Azure Key Vault URL is missing in appsettings.json");
+        }
 
-		var keyVaultUrl = Configuration["AzureKeyVault:Url"];
-		if (string.IsNullOrEmpty(keyVaultUrl))
-		{
-				throw new Exception("Azure Key Vault URL is missing in appsettings.json");
-		}
-		builder.AddAzureKeyVault(keyVaultUrl);
+        return new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+    }
 
-		var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
-		SpeechKey = client.GetSecret(Configuration["AzureSpeech:Secret"]).Value.Value;
-		Region = Configuration["AzureSpeech:Region"]?? "eastus";
-		OpenAiApiKey = client.GetSecret(Configuration["OpenAI:ApiKey"]).Value.Value;
-		DatabaseConnectionString = client.GetSecret(Configuration["ConnectionStrings:DefaultConnection"]).Value.Value;
-	}
+    public static string GetSpeechKey()
+    {
+        return GetSecretClient().GetSecret(Configuration["AzureSpeech:Secret"]).Value.Value;
+    }
+
+    public static string GetRegion()
+    {
+        return Configuration["AzureSpeech:Region"] ?? "eastus";
+    }
+
+    public static string GetOpenAiApiKey()
+    {
+        return GetSecretClient().GetSecret(Configuration["OpenAI:ApiKey"]).Value.Value;
+    }
+
+    public static string GetDatabaseConnectionString()
+    {
+        return GetSecretClient().GetSecret(Configuration["ConnectionStrings:DefaultConnection"]).Value.Value;
+    }
+		public static string GetBlobStorageConnectionString()
+    {
+        return Configuration["Values:AzureWebJobsStorage"];
+    }
 }
