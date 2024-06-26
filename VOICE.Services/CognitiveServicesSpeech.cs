@@ -1,4 +1,6 @@
+using System.Reflection.Metadata;
 using Microsoft.CognitiveServices.Speech;
+using Azure.Storage.Blobs;
 
 namespace VOICE.Services
 {
@@ -21,7 +23,7 @@ public class CognitiveServicesSpeech
 		{
 			using var recognizer = new SpeechRecognizer(_speechConfig);
 			Console.WriteLine("Say something...");
-
+			
 			var result = await recognizer.RecognizeOnceAsync();
 			if (result.Reason == ResultReason.RecognizedSpeech)
 			{

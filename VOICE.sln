@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOICE.ConsoleApp", "VOICE.ConsoleApp\VOICE.ConsoleApp.csproj", "{6B28B839-8110-4CFA-A295-715AEE1A6934}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOICE.Configuration", "VOICE.Configuration\VOICE.Configuration.csproj", "{BE43BB81-05E8-4BCD-959F-A5DA63C1B28D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VOICE.Services", "VOICE.Services\VOICE.Services.csproj", "{88A4E85F-A7A6-44B1-93C9-23E371534EBD}"
@@ -20,6 +22,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B28B839-8110-4CFA-A295-715AEE1A6934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B28B839-8110-4CFA-A295-715AEE1A6934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B28B839-8110-4CFA-A295-715AEE1A6934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B28B839-8110-4CFA-A295-715AEE1A6934}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE43BB81-05E8-4BCD-959F-A5DA63C1B28D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE43BB81-05E8-4BCD-959F-A5DA63C1B28D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE43BB81-05E8-4BCD-959F-A5DA63C1B28D}.Release|Any CPU.ActiveCfg = Release|Any CPU
