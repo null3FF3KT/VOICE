@@ -12,10 +12,9 @@ namespace VOICE.ConsoleApp
     {
         static async Task Main(string[] args)
         {
-            var configService = new ConfigurationService();
-            var speechService = new CognitiveServicesSpeech(configService.SpeechKey, configService.Region);
-            var openAiService = new OpenAIService(configService.OpenAiApiKey);
-            var connectionString = configService.DatabaseConnectionString;
+            var speechService = new CognitiveServicesSpeech(ConfigurationService.GetSpeechKey(), ConfigurationService.GetRegion());
+            var openAiService = new OpenAIService(ConfigurationService.GetOpenAiApiKey());
+            var connectionString = ConfigurationService.GetDatabaseConnectionString();
 
             var host = CreateHostBuilder(args, connectionString).Build();
             ApplyMigrations(host);
