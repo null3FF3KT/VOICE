@@ -54,7 +54,8 @@ jobs:
       - name: Build
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet publish -c Release -o ./output --runtime linux-x64 --self-contained false
+          dotnet publish -c Release -o ./output
+          ls -R ./output
           popd
 
       - name: 'Run Azure Functions Action'
