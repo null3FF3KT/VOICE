@@ -51,16 +51,17 @@ jobs:
           which ffmpeg
           cp $(which ffmpeg) ./VOICE.AiFunctionApp/FFmpeg/linux-x64/
 
-      - name: Check zip contents
+      - name: Build
         run: |
-          zip -r function_app.zip ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output
-          unzip -l function_app.zip
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          dotnet publish -c Release -o ./output --runtime linux-x64 --self-contained false
+          popd
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: 'voiceAIFunctionApp'
-          slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           
