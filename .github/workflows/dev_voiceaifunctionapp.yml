@@ -42,10 +42,13 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5231E611A5B945F89EBA43017ED51011 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9693C1D6BB104D0F9EB13AD3B2B2AF08 }}
 
-      - name: Copy FFmpeg binaries
+      - name: Download and Setup FFmpeg
         run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
           mkdir -p ./VOICE.AiFunctionApp/FFmpeg/linux-x64
-          cp /path/to/ffmpeg ./VOICE.AiFunctionApp/FFmpeg/linux-x64/
+          which ffmpeg
+          cp $(which ffmpeg) ./VOICE.AiFunctionApp/FFmpeg/linux-x64/
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
