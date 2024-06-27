@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '/VOICE.AiFunctionApp' # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './VOICE.AiFunctionApp' # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '8.0.x' # set this to the dotnet version to use
 
 jobs:
@@ -41,6 +41,18 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E4509FDEDA5F4C7CA469EA2B0594C21A }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5231E611A5B945F89EBA43017ED51011 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9693C1D6BB104D0F9EB13AD3B2B2AF08 }}
+
+      - name: Apply database migrations
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef database update --project ./VOICE.Data/VOICE.Data.csproj --startup-project ./VOICE.AiFunctionApp/VOICE.AiFunctionApp.csproj
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.DATABASE_CONNECTION_STRING }}
+
+      - name: Copy FFmpeg binaries
+        run: |
+          mkdir -p ./VOICE.AiFunctionApp/FFmpeg/linux-x64
+          cp /path/to/ffmpeg ./VOICE.AiFunctionApp/FFmpeg/linux-x64/
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
