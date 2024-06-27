@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
-    <OutputType>Exe</OutputType>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  <PublishTrimmed>true</PublishTrimmed>
+</PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\VOICE.Configuration\VOICE.Configuration.csproj" />
     <ProjectReference Include="..\VOICE.Services\VOICE.Services.csproj" />
