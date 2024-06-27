@@ -7,7 +7,6 @@ extensions.json
 local.settings.json
 appsettings.json
 task.json
-host.json
 # User-specific files
 *.suo
 *.user
