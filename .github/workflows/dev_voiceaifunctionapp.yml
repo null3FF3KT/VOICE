@@ -33,6 +33,7 @@ jobs:
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
+          ls -R ./output
           popd
       
       - name: Login to Azure
@@ -49,6 +50,11 @@ jobs:
           mkdir -p ./VOICE.AiFunctionApp/FFmpeg/linux-x64
           which ffmpeg
           cp $(which ffmpeg) ./VOICE.AiFunctionApp/FFmpeg/linux-x64/
+
+      - name: Check zip contents
+        run: |
+          zip -r function_app.zip ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output
+          unzip -l function_app.zip
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
