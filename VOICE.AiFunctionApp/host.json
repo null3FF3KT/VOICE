@@ -18,16 +18,22 @@
   },
   "extensionBundle": {
     "id": "Microsoft.Azure.Functions.ExtensionBundle",
-    "version": "[3.*, 4.0.0)"
+    "version": "[4.*, 5.0.0)"
   },
   "cors": {
     "allowedOrigins": [
-      "http://localhost:8000"
+      "http://localhost:8000",
+      "https://lemon-moss-0c85a060f.5.azurestaticapps.net"
     ],
     "allowedMethods": [
       "GET",
       "POST",
       "OPTIONS"
+    ],
+    "allowedHeaders": [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With"
     ]
   }
 }
