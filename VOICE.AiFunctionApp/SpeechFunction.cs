@@ -9,6 +9,7 @@ using System.Net;
 using System.Diagnostics;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net.Http.Headers;
+using VOICE.Configuration;
 
 namespace VOICE.AiFunctionApp
 {
@@ -29,8 +30,16 @@ namespace VOICE.AiFunctionApp
         }
 
         [Function("ProcessAudio")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "ProcessAudio")] HttpRequestData req)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "post", "options", Route = "ProcessAudio")] HttpRequestData req)
         {
+            if (req.Method == "OPTIONS")
+            {
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                response.Headers.Add("Access-Control-Allow-Origin", ConfigurationService.GetCorsAcceptableOrigin()); // Or specify your app's URL
+                response.Headers.Add("Access-Control-Allow-Methods", "POST, OPTIONS");
+                response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization, x-functions-key");
+                return response;
+            }
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             _logger.LogInformation($"Request content type: {req.Headers.GetValues("Content-Type").FirstOrDefault()}");
             try
@@ -64,6 +73,9 @@ namespace VOICE.AiFunctionApp
                 // Create response and write WAV data
                 var response = req.CreateResponse(HttpStatusCode.OK);
                 response.Headers.Add("Content-Type", "audio/wav");
+                response.Headers.Add("Access-Control-Allow-Origin", ConfigurationService.GetCorsAcceptableOrigin());
+                response.Headers.Add("Access-Control-Allow-Methods", "POST, OPTIONS");
+                response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization, x-functions-key");
                 await response.Body.WriteAsync(responseSpeechWav, 0, responseSpeechWav.Length);
 
                 return response;

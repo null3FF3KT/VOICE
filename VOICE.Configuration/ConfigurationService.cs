@@ -37,6 +37,11 @@ public static class ConfigurationService
         return GetSecretClient().GetSecret(Configuration["OpenAI:ApiKey"]).Value.Value;
     }
 
+    public static string GetCorsAcceptableOrigin()
+    {
+        return GetSecretClient().GetSecret(Configuration["VoiceUI:Url"]).Value.Value;
+    }
+
     public static string GetDatabaseConnectionString()
     {
         return GetSecretClient().GetSecret(Configuration["ConnectionStrings:DefaultConnection"]).Value.Value;
